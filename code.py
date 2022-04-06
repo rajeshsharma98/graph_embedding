@@ -23,7 +23,9 @@ for i in clmns[1:]:
 
 '''EDA- still remaining'''
 # Count null values in every column
-kaggle.isnull().sum(axis = 0)
+(kaggle.isnull().sum(axis = 0)).sum()
+kaggle = kaggle.fillna(0)
+(kaggle.isnull().sum(axis = 0)).sum()
 kaggle.fillna(9999,inplace=True)
 
 # '''1. Standardize the data'''

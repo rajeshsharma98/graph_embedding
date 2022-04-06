@@ -3,6 +3,13 @@ Steps:
 1. - [x] Standardize the data such that every column range between 0 and 1 
 2. - [x] Remove edge with weight = 0 
       - [x] Check number of edges removed == number of zeros in the dataset  
+3. - [ ] baseline model
+      - [x] Check for null values  
+      - [x] Standardize data
+      - [x] PCA implementation
+      - [ ] Run ML algorothim
+      - [ ] Get the accuracy  
+
 4. - [ ] Implement Random walk   
 5. - [ ] Clustering or KNN (K-Nearest Neighbor)   
 
