@@ -16,8 +16,10 @@ Steps:
 
 4. // [ ] Implement Random walk - edge weight is the probability of that path(or edge).  
       [x] Create toy bipartite graph   
-      [x] Verify random walk and get the embeddings of toy graph   
-      [ ] Tweak the algorithm to cosider weight of edges as probabilities  
+      [x] Verify random walk(without weights) and get the embeddings of toy graph   
+      [x] Tweak the algorithm to cosider weight of edges as probabilities  
+      [x] Implement random walk on toy graph using weights 
+      [ ] Verify random walk and get the embeddings of toy graph    
       [ ] Implement random walk on main graph using weights  
       [ ] Save the embedding  
 5. // [ ] Clustering or KNN (K-Nearest Neighbor)    
