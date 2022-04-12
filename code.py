@@ -1,6 +1,12 @@
 # Code to check if required libraries installed or not 
 # if not do something
 
+
+
+##############
+''' Before uploading to carbonate check word2vec version accordingly change size and iter paramter name'''
+############
+
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -27,7 +33,6 @@ for i in clmns[1:]:
     else:
         continue
 #-------------------------------------------- DATA PRE PROCESSING AND GRAPH CREATION
-
 '''EDA- still remaining'''
 # Count null values in every column
 (kaggle.isnull().sum(axis = 0)).sum()
@@ -100,16 +105,17 @@ for (u, v) in K.edges():
     K.edges[u,v]['weight'] = round(random.random(),3)
 print('Toy graph weights added\n')
 
-pos = {}
-pos.update((i, (i - m/2, 1)) for i in range(m))
-pos.update((i, (i - m - n/2, 0)) for i in range(m, m + n))
-fig, ax = plt.subplots()
-fig.set_size_inches(15, 4)
-labels = nx.get_edge_attributes(K,'weight')
-nx.draw(K,pos)
-nx.draw_networkx_edge_labels(K,  pos=pos, edge_labels=labels)
-plt.show()
-print('Toy graph plotted with weights\n')
+''' Graph Visualiation'''
+# pos = {}
+# pos.update((i, (i - m/2, 1)) for i in range(m))
+# pos.update((i, (i - m - n/2, 0)) for i in range(m, m + n))
+# fig, ax = plt.subplots()
+# fig.set_size_inches(15, 4)
+# labels = nx.get_edge_attributes(K,'weight')
+# nx.draw(K,pos)
+# nx.draw_networkx_edge_labels(K,  pos=pos, edge_labels=labels)
+# plt.show()
+# print('Toy graph plotted with weights\n')
 
 #-------------------------------------------- CLASS / EMBEDDING
 ''' 4.1. Random walk'''
@@ -136,11 +142,11 @@ class DeepWalk:
         self.walk_length = walk_length
         self.walk_per_node = walks_per_node
 
-    def get_walks(self, g: nx.Graph, use_probabilities: bool = False) -> List[List[str]]:
+    def get_walks(self, g: nx.Graph, use_weight: bool = False) -> List[List[str]]:
         """
         Generate all the random walks
         g: Graph
-        use_probabilities: use edge weights as probabilioties for random walk
+        use_weight: use edge weights as probabilioties for random walk
         """
         walks = []
         for _ in range(self.walk_per_node):
@@ -151,7 +157,7 @@ class DeepWalk:
               for i in range(self.walk_length):
                   neighbours = g.neighbors(walk[i])
                   neighs = list(neighbours)
-                  if use_probabilities:
+                  if use_weight:
                       probabilities = [g.get_edge_data(walk[i], neig)["weight"] for neig in neighs]
                       sum_probabilities = sum(probabilities)
                       probabilities = list(map(lambda t: t / sum_probabilities, probabilities))
@@ -160,18 +166,18 @@ class DeepWalk:
                       p = random.choice(neighs)
                   walk.append(p)
               walks.append(walk)
-                # walks.append(self.random_walk(g=g, start=node, use_probabilities=use_probabilities))
+                # walks.append(self.random_walk(g=g, start=node, use_weight = use_weight))
         return walks
 
     def get_embedding(self, G, walks,workers=3, iter=5, **kwargs):
           kwargs["sentences"] = walks
           kwargs["min_count"] = kwargs.get("min_count", 0)
-          kwargs["size"] = self.embed_size
+          kwargs["vector_size"] = self.embed_size
           kwargs["sg"] = 1  # skip gram
           kwargs["hs"] = 1  # deepwalk use Hierarchical Softmax
           kwargs["workers"] = workers
           kwargs["window"] = self.window_size
-          kwargs["iter"] = iter
+          kwargs["epochs"] = iter
           print("Learning embedding vectors...")
           model = Word2Vec(**kwargs)
           print("Learning embedding vectors done!")
@@ -181,9 +187,11 @@ class DeepWalk:
               embeddings[str(word)] = model.wv[str(word)]
           return embeddings
 #-------------------------------------------- Random walk opn toy graph
+
 # Try the embedding in toy graph
+graph = K
 p = DeepWalk(2,2,2,2)
-wal = p.generate_walks(K,use_probabilities=True)
+wal = p.get_walks(graph,use_weight=True)
 
 # need to convert walk values to string datatype as by default node value are of inte type and therefore the nested 
 # list items also
@@ -197,21 +205,19 @@ for i in wal:
 
 # get_embedding(K,z1)
 
-''' //TODO plot the embeddings of toy graph in 2D space- embedding_size=2'''
+# //TODO plot the embeddings of toy graph in 2D space- embedding_size=2'''
 
 # wlak_length = 10 and 12
 
 #-------------------------------------------- CLUSTERING
-''' //5.1. Clustering '''
+# //TODO to decide cluster- elbow method or sihoutte index'''
 
-''' //TODO to decide cluster'''
 
-df = pd.DataFrame.from_dict(p.get_embedding(K,z1), orient='index')
-''' //5.2. Default clusters '''
+''' 5.1. Clustering '''
+df_cluster = pd.DataFrame.from_dict(p.get_embedding(graph,z1), orient='index')
 
-kmeans = KMeans(n_clusters=2, random_state=0).fit(df)
+''' 5.2. Default clusters parameter'''
+kmeans = KMeans(n_clusters=2, random_state=0).fit(df_cluster)
 
 kmeans.labels_
-
-# Embedding on original graph
 
