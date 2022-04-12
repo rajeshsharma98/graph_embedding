@@ -7,10 +7,11 @@ import matplotlib.pyplot as plt
 import warnings
 import random
 from sklearn.cluster import KMeans
-
 # from tqdm import tqdm
 # from gensim.models.word2vec import Word2Vec
 warnings.filterwarnings("ignore", category=FutureWarning)
+
+#-------------------------------------------- READ DATA
 
 kaggle = pd.read_csv('dataset/nutrition_kaggle.csv')
 kaggle_copy = kaggle.copy() # copy of original data
@@ -25,7 +26,7 @@ for i in clmns[1:]:
         kaggle[i] = kaggle[i].str.replace('[a-zA-Z]', '')
     else:
         continue
-#--------------------------------------------
+#-------------------------------------------- DATA PRE PROCESSING AND GRAPH CREATION
 
 '''EDA- still remaining'''
 # Count null values in every column
@@ -78,7 +79,7 @@ print('Number of edges removed: ',before-after,'\n' )
 zero = ((kaggle == '0.0').sum()).sum()
 zero == before-after
 
-#--------------------------------------------
+#-------------------------------------------- TOY GRAPH
 # Toy Graph
 m, n = 3, 4
 K = nx.complete_bipartite_graph(m, n)
@@ -108,7 +109,7 @@ nx.draw_networkx_edge_labels(K,  pos=pos, edge_labels=labels)
 plt.show()
 print('Toy graph plotted with weights\n')
 
-#--------------------------------------------
+#-------------------------------------------- CLASS / EMBEDDING
 ''' Professor code run''' # helper-2.ipynb used
 # // TODO Need to add weights to walker
 import networkx as nx
@@ -199,7 +200,7 @@ for i in wal:
 
 # wlak_length = 10 and 12
 
-#--------------------------------------------
+#-------------------------------------------- CLUSTERING
 ''' //TODO to decide cluster'''
 
 df = pd.DataFrame.from_dict(get_embedding(K,z1), orient='index')
