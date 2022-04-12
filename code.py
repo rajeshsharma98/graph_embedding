@@ -35,11 +35,12 @@ kaggle = kaggle.fillna(0)
 (kaggle.isnull().sum(axis = 0)).sum()
 kaggle.fillna(9999,inplace=True)
 
-'''1. Standardize the data'''
+'''1.1.  Standardize the data'''
 kaggle[clmns[1:]] = kaggle[clmns[1:]].apply(pd.to_numeric)
 kaggle[clmns[1:]]= (kaggle[clmns[1:]]-kaggle[clmns[1:]].min())/(kaggle[clmns[1:]].max()-kaggle[clmns[1:]].min())
 kaggle[clmns[1:]] = kaggle[clmns[1:]].astype(str)
-kaggle.to_csv('srtandardized_dataset.csv')
+'''1.3.  Standardize the data'''
+# kaggle.to_csv('srtandardized_dataset.csv')
 
 ''' Graph Creation'''
 # Stacking
@@ -64,7 +65,7 @@ for i in names:
     for j in clmns:
         B[i][j]['weight'] = kaggle.loc[i,j]
 
-'''2.  Remove Edges with weight=0 '''
+'''2.1.  Remove Edges with weight=0 '''
 edge_wgt = nx.get_edge_attributes(B,'weight')
 before = len(B.edges)
 print('Number of edges before removal: ',before)
@@ -74,12 +75,13 @@ after = len(B.edges)
 print('Number of edges after removal: ',after)
 print('Number of edges removed: ',before-after,'\n' )
 
-''' 2.1 '''
+''' 2.2. '''
 # count number of zeros in the dataset
 zero = ((kaggle == '0.0').sum()).sum()
 zero == before-after
 
 #-------------------------------------------- TOY GRAPH
+''' 4.2. TOy graph '''
 # Toy Graph
 m, n = 3, 4
 K = nx.complete_bipartite_graph(m, n)
@@ -110,6 +112,7 @@ plt.show()
 print('Toy graph plotted with weights\n')
 
 #-------------------------------------------- CLASS / EMBEDDING
+''' 4.1. Random walk'''
 ''' Professor code run''' # helper-2.ipynb used
 # // TODO Need to add weights to walker
 import networkx as nx
@@ -120,7 +123,7 @@ from tqdm import tqdm
 from gensim.models.word2vec import Word2Vec
 
 class DeepWalk:
-    def __init__(self, window_size: int, embedding_size: int, walk_length: int, walks_per_node: int):
+    def __init__(self, window_size: int, embed_size: int, walk_length: int, walks_per_node: int):
         """
         ATTRIBUTES:  
         window_size: window size for the Word2Vec model
@@ -129,13 +132,13 @@ class DeepWalk:
         walks_per_node: number of walks per node
         """
         self.window_size = window_size
-        self.embedding_size = embedding_size
+        self.embed_size = embed_size
         self.walk_length = walk_length
         self.walk_per_node = walks_per_node
 
-    def generate_walks(self, g: nx.Graph, use_probabilities: bool = False) -> List[List[str]]:
+    def get_walks(self, g: nx.Graph, use_probabilities: bool = False) -> List[List[str]]:
         """
-        ATTRIBUTES:
+        Generate all the random walks
         g: Graph
         use_probabilities: use edge weights as probabilioties for random walk
         """
@@ -143,7 +146,7 @@ class DeepWalk:
         for _ in range(self.walk_per_node):
             random_nodes = list(g.nodes)
             random.shuffle(random_nodes)
-            for node in tqdm(random_nodes):  # tqdm generated progress bar- will be useful in the original graph as it is big
+            for node in tqdm(random_nodes):
               walk = [node] # node =start
               for i in range(self.walk_length):
                   neighbours = g.neighbors(walk[i])
@@ -157,29 +160,27 @@ class DeepWalk:
                       p = random.choice(neighs)
                   walk.append(p)
               walks.append(walk)
+                # walks.append(self.random_walk(g=g, start=node, use_probabilities=use_probabilities))
         return walks
 
-# //TODO : insert following function inside above class
-def get_embedding(G, walks, embed_size=128, window_size=5, workers=3, iter=5, **kwargs):
-    kwargs["sentences"] = walks
-    kwargs["min_count"] = kwargs.get("min_count", 0)
-    kwargs["size"] = embed_size
-    kwargs["sg"] = 1  # skip gram
-    kwargs["hs"] = 1  # deepwalk use Hierarchical Softmax
-    kwargs["workers"] = workers
-    kwargs["window"] = window_size
-    kwargs["iter"] = iter
+    def get_embedding(self, G, walks,workers=3, iter=5, **kwargs):
+          kwargs["sentences"] = walks
+          kwargs["min_count"] = kwargs.get("min_count", 0)
+          kwargs["size"] = self.embed_size
+          kwargs["sg"] = 1  # skip gram
+          kwargs["hs"] = 1  # deepwalk use Hierarchical Softmax
+          kwargs["workers"] = workers
+          kwargs["window"] = self.window_size
+          kwargs["iter"] = iter
+          print("Learning embedding vectors...")
+          model = Word2Vec(**kwargs)
+          print("Learning embedding vectors done!")
 
-    print("Learning embedding vectors...")
-    model = Word2Vec(**kwargs)
-    print("Learning embedding vectors done!")
-
-    embeddings = {}
-    for word in G.nodes():
-        embeddings[str(word)] = model.wv[str(word)] # Need to convert node value to string else int not iterable
-    return embeddings
-
-
+          embeddings = {}
+          for word in G.nodes():
+              embeddings[str(word)] = model.wv[str(word)]
+          return embeddings
+#-------------------------------------------- Random walk opn toy graph
 # Try the embedding in toy graph
 p = DeepWalk(2,2,2,2)
 wal = p.generate_walks(K,use_probabilities=True)
@@ -201,9 +202,12 @@ for i in wal:
 # wlak_length = 10 and 12
 
 #-------------------------------------------- CLUSTERING
+''' //5.1. Clustering '''
+
 ''' //TODO to decide cluster'''
 
-df = pd.DataFrame.from_dict(get_embedding(K,z1), orient='index')
+df = pd.DataFrame.from_dict(p.get_embedding(K,z1), orient='index')
+''' //5.2. Default clusters '''
 
 kmeans = KMeans(n_clusters=2, random_state=0).fit(df)
 

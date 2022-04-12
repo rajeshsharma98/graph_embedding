@@ -1,7 +1,4 @@
-# Code to check if required libraries installed or not 
-# if not do something
-
-# Is it worth spending time on incresing base_model accuracy ? 
+''' 3.1. '''
 
 import pandas as pd
 import networkx as nx
@@ -27,14 +24,15 @@ for i in clmns[1:]:
     else:
         continue
 
-''' //TODO: EDA'''
+''' //TODO: EDA Remaining'''
 # Count null values in every column
+''' 3.2. Check for null values '''
 (kaggle.isnull().sum(axis = 0)).sum()
 kaggle = kaggle.fillna(0)
 print((kaggle.isnull().sum(axis = 0)).sum())
 kaggle.fillna(9999,inplace=True)
 
-''' 1. Correlation '''
+''' Correlation '''
 kaggle[clmns[1:]] = kaggle[clmns[1:]].apply(pd.to_numeric)
 corr = kaggle.corr()
 # sns.heatmap(corr, annot=True)
@@ -49,7 +47,7 @@ kot = corr[corr>=.8]
 
 ''' //TODO: Get pair name for above specified range'''
 
-'''2. PCA'''
+'''3.3. - 3.4. Standardization & PCA'''
 # kaggle[clmns[1:]]= (kaggle[clmns[1:]]-kaggle[clmns[1:]].min())/(kaggle[clmns[1:]].max()-kaggle[clmns[1:]].min())
 X = kaggle[clmns[1:]]
 X_normalized =(X - X.mean()) / X.std()
@@ -60,8 +58,8 @@ pca = PCA(n_components = 0.95)
 pca.fit(X)
 X_reduced = pca.transform(X)
 
-''' //TODO:Split data into train and test'''
+''' //TODO: Split data into train and test'''
 
-''' //TODO:Apply required ML algorithm'''
+''' //TODO: 3.5. Apply required ML algorithm'''
 
-''' //TODO:Get accuracy'''
+''' //TODO: 3.6. Get accuracy'''

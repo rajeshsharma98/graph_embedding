@@ -14,7 +14,7 @@ Steps:
       - [ ] Run ML algorothim  
       - [ ] Get the accuracy  
 
-4. // [ ] Implement Random walk - edge weight is the probability of that path(or edge).  
+4. // [x] Implement Random walk - edge weight is the probability of that path(or edge).  
       [x] Create toy bipartite graph   
       [x] Verify random walk(without weights) and get the embeddings of toy graph   
       [x] Tweak the algorithm to cosider weight of edges as probabilities  
