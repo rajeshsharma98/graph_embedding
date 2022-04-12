@@ -2,7 +2,7 @@
 Steps:  
 1. // [x] Standardize the data such that every column range between 0 and 1   
       [ ] Check if standardizattion was implemented  
-      [ ] Store the standardize data as a seperate file    
+      [x] Store the standardize data as a seperate file    
 
 2. // [x] Remove edge with weight = 0   
       - [x] Check number of edges removed == number of zeros in the dataset  
@@ -22,7 +22,11 @@ Steps:
       [ ] Verify random walk and get the embeddings of toy graph    
       [ ] Implement random walk on main graph using weights  
       [ ] Save the embedding  
-5. // [ ] Clustering or KNN (K-Nearest Neighbor)    
+
+5. // [ ] Clustering  
+      [ ] For default paramters  
+      [ ] Decide number of clusters  
+6. // [ ] KNN (K-Nearest Neighbor)    
 
 Code files:  
 1. base_model.py - Baseline model implementation  

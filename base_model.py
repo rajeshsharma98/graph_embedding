@@ -1,6 +1,8 @@
 # Code to check if required libraries installed or not 
 # if not do something
 
+# Is it worth spending time on incresing base_model accuracy ? 
+
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
