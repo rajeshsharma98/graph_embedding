@@ -26,6 +26,7 @@ Steps:
 5. - [ ] Clustering  
       - [ ] For default paramters  
       - [ ] Decide number of clusters  
+      - [ ] Get nearest neignor after clustering  
 6. - [ ] KNN (K-Nearest Neighbor)    
 
 Code files:  
