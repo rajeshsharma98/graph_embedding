@@ -1,6 +1,7 @@
 from .embedding_algorithm import Embedding
 from walks.factory import walker
 from .word2Vec import word2VecEmbedding
+from utils import adj_list_reader
 
 class DeepWalk(Embedding):
 
@@ -9,22 +10,15 @@ class DeepWalk(Embedding):
         self.walk_len = args.walk_len
         self.walks = args.walks
         self.walker = args.walker
+        self.adj_list = adj_list_reader(args.adj_list)
         self.set_embedding()
 
     def set_embedding(self):
         # perform walks
-        
-        ## TODO: remove this
-        adj_list = [["0", "1", "2"],["5", "6"], ["5", "1"], ["1", "2"], ["3", "4"], ["6", "1"], ["5", "2"]]
-
-        walks = walker(adj_list, self.walks, self.walk_len, self.walker)
-
-        # print(walks)
+        walks = walker(self.adj_list, self.walks, self.walk_len, self.walker)
         
         # word2vec on generated walks
         self.embedding = word2VecEmbedding(walks);
-
-        print(self.embedding.wv['0']);
 
     def get_embedding(self):
         return self.embedding;

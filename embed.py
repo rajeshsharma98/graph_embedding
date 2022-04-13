@@ -14,6 +14,8 @@ deepwalk_parser.add_argument('-wl', '--walk_len', default=10,
                              help='specify the walk length(default: %(default)s)');
 deepwalk_parser.add_argument('-walker', '--walker', default="random_walk",
                              help='specify the walker type(default: %(default)s)');
+deepwalk_parser.add_argument('-adj_list', '--adj_list',
+                             help='specify the walker type(default: %(default)s)');
 
 # node2vec algo params
 node2vec_parser = subparsers.add_parser(
