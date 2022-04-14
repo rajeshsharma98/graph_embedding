@@ -1,5 +1,10 @@
 # Ingredient recommendation  
 Steps:  
+
+Our data is case sensitive have to consider that   
+
+
+
 1.  - [x] Standardize the data such that every column range between 0 and 1   
       - [ ] Check if standardizattion was implemented  
       - [x] Store the standardize data as a seperate file    
@@ -19,14 +24,15 @@ Steps:
       - [x] Verify random walk(without weights) and get the embeddings of toy graph   
       - [x] Tweak the algorithm to cosider weight of edges as probabilities  
       - [x] Implement random walk on toy graph using weights 
-      - [ ] Verify random walk and get the embeddings of toy graph    
+      - [x] Verify random walk and get the embeddings of toy graph    
       - [ ] Implement random walk on main graph using weights  
       - [ ] Save the embedding  
 
 5. - [ ] Clustering  
-      - [ ] For default paramters  
+      - [x] For default paramters  
       - [ ] Decide number of clusters  
-      - [ ] Get nearest neignor after clustering  
+      - [ ] Get nearest neignor after clustering   
+6. - [ ] TSNE to cisualize data  
 6. - [ ] KNN (K-Nearest Neighbor)    
 
 Code files:  
