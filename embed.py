@@ -8,7 +8,7 @@ subparsers.required = True
 # deep walk algo params
 deepwalk_parser = subparsers.add_parser(
     'deep_walk', help='deep walk embedding algorithm');
-deepwalk_parser.add_argument('-w', '--walks', default=10,
+deepwalk_parser.add_argument('-w', '--number_of_walks', default=10,
                              help='specify the number of walks (default: %(default)s)');
 deepwalk_parser.add_argument('-wl', '--walk_len', default=10,
                              help='specify the walk length(default: %(default)s)');
@@ -20,7 +20,7 @@ deepwalk_parser.add_argument('-adj_list', '--adj_list',
 # node2vec algo params
 node2vec_parser = subparsers.add_parser(
     'node2vec', help='node2vec embedding algorithm');
-node2vec_parser.add_argument('-w', '--walks', default=10,
+node2vec_parser.add_argument('-w', '--number_of_walks', default=10,
                              help='specify the number of walks (default: %(default)s)');
 node2vec_parser.add_argument('-wl', '--walk_len', default=10,
                              help='specify the walk length(default: %(default)s)');
