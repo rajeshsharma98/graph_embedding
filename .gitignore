@@ -129,8 +129,9 @@ dmypy.json
 .pyre/
 
 # pickle files
-.pickle
+*.pickle
 
-# CSV / txt dataset
-.txt
-.csv
+# CSV / txt / JSON dataset
+*.txt
+*.csv
+*.json
