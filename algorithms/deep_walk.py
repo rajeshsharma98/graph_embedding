@@ -18,7 +18,7 @@ class DeepWalk(Embedding):
         walks = walker(self.adj_list, self.walks, self.walk_len, self.walker)
         
         # word2vec on generated walks
-        self.embedding = word2VecEmbedding(walks);
+        self.embedding = word2VecEmbedding(walks)
 
     def get_embedding(self):
         return self.embedding
