@@ -24,7 +24,8 @@ class DeepWalk(Embedding):
     def get_embedding(self):
         data = {}
         for node in self.adj_list:
-            data[node] = self.embedding.wv[node]
+            if node in self.embedding.wv:
+                data[node] = self.embedding.wv[node]
         file_name = "deep_walk_" + self.walker + "_" + str(self.walks) + "_" + str(self.walk_len)
         export_pickel(data, file_name)
 
