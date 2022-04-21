@@ -1,4 +1,5 @@
 import json
+import pickle
 
 def adj_list_reader(file):
     adj_list = {};
@@ -37,3 +38,8 @@ def dfs(adj, color, current_color, node):
             if (not dfs(adj, color, -1 * current_color, neighbour[0])):
                 return False
     return True
+
+
+def export_pickel(data, file_name):
+    with open(file_name + ".pickle", 'wb') as handle:
+        pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)
