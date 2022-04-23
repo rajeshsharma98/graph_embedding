@@ -135,3 +135,6 @@ dmypy.json
 *.txt
 *.csv
 *.json
+
+# vs code
+.vscode/*
