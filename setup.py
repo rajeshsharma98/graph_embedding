@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='gembed',
-    version='1.0.0',    
+    version='1.0.1',    
     description='Graph Embedding Package',
     url='https://github.com/pranavacharya/graph_embedding',
     author='Pranav Acharya',
