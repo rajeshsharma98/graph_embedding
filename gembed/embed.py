@@ -1,5 +1,5 @@
 import argparse
-from gembed.algorithms.factory import embedding_factory
+from algorithms.factory import embedding_factory
 
 parser = argparse.ArgumentParser();
 subparsers = parser.add_subparsers(dest='algorithm');
@@ -14,8 +14,10 @@ deepwalk_parser.add_argument('-wl', '--walk_len', default=10,
                              help='specify the walk length(default: %(default)s)');
 deepwalk_parser.add_argument('-walker', '--walker', default="random_walk",
                              help='specify the walker type(default: %(default)s)');
+deepwalk_parser.add_argument('-d', '--dimension',  default=128,
+                             help='specify the embedding dimensions(default: %(default)s)');
 deepwalk_parser.add_argument('-adj_list', '--adj_list',
-                             help='specify the walker type(default: %(default)s)');
+                             help='specify the input adjencency list(default: %(default)s)');
 
 # node2vec algo params
 node2vec_parser = subparsers.add_parser(
