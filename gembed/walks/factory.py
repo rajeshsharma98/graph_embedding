@@ -1,6 +1,6 @@
 from .random_walk import random_walk
 from .baised_walk import baised_walk
-from utils import fetch_bipartite_graph_node
+from gembed.utils import fetch_bipartite_graph_node
 from tqdm import trange
 
 import random
