@@ -6,7 +6,7 @@ Our data is case sensitive have to consider that
 Data is unsupervised -> use clustering to label the data -> use KNN on that  
 
 1.  - [x] Standardize the data such that every column range between 0 and 1   
-      - [ ] Check if standardizattion was implemented  
+      - [x] Check if standardizattion was implemented  
       - [x] Store the standardize data as a seperate file    
 
 2.  - [x] Remove edge with weight = 0   
@@ -25,15 +25,15 @@ Data is unsupervised -> use clustering to label the data -> use KNN on that
       - [x] Tweak the algorithm to cosider weight of edges as probabilities  
       - [x] Implement random walk on toy graph using weights 
       - [x] Verify random walk and get the embeddings of toy graph    
-      - [ ] Implement random walk on main graph using weights  
+      - [x] Implement random walk on main graph using weights  
       - [x] Save the embedding  
 
-5. - [ ] Clustering  
+5. - [x] Clustering  
       - [x] For default paramters  
       - [x] Decide number of clusters  
-      - [ ] Get nearest neignor after clustering   
-6. - [ ] TSNE to cisualize data  
-6. - [ ] KNN (K-Nearest Neighbor)    
+      - [x] Get nearest neignor after clustering   
+6. - [x] TSNE to cisualize data  
+6. - [x] KNN (K-Nearest Neighbor)    
 
 Reference:  
 GitHub docs- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax    
